@@ -4,6 +4,9 @@ from sqlalchemy.orm import relationship
 
 from edunix import connection
 
+# Import relations
+from room.models import RoomChatAgg
+
 class User(connection.Base):
 	__tablename__ = 'users'
 
@@ -16,3 +19,6 @@ class User(connection.Base):
 	# Relationships
 	notes = relationship('Note', back_populates='writer')
 	stories = relationship('Story', back_populates='teller')
+	as_user_1 = relationship('RoomChatAgg', back_populates='user_1', foreign_keys=[RoomChatAgg.user_id_1])
+	as_user_2 = relationship('RoomChatAgg', back_populates='user_2', foreign_keys=[RoomChatAgg.user_id_2])
+	chats = relationship('Chat', back_populates='sender')

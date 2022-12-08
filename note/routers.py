@@ -38,3 +38,18 @@ async def update_note(id, request:schemas.Note, db:Session=Depends(connection.ge
 @router.delete('/{id}', status_code=204)
 async def delete_note(id, db:Session=Depends(connection.get_db), authenticated_user:AuthSchemas.AuthenticatedUser=Depends(AuthServices.get_current_user)):
 	return await services.delete_note(id=id, db=db, authenticated_user=authenticated_user)
+
+# Share note
+@router.put('/{id}/share', status_code=204)
+async def set_public_status(id, request:schemas.SetPublicNote, db:Session=Depends(connection.get_db), authenticated_user:AuthSchemas.AuthenticatedUser=Depends(AuthServices.get_current_user)):
+	return await services.set_public_status(id=id, request=request, db=db, authenticated_user=authenticated_user)
+
+# Get all public notes from particular user
+@router.get('/{user_id}/shared/all', response_model=List[schemas.GetNote])
+async def get_all_public_notes(user_id, db: Session=Depends(connection.get_db), authenticated_user: AuthSchemas.AuthenticatedUser=Depends(AuthServices.get_current_user)) -> List[schemas.GetNote]:
+	return await services.get_all_public_notes(user_id=user_id, db=db, authenticated_user=authenticated_user)
+
+# Get detail public note
+@router.get('/{id}/shared', response_model=schemas.GetNote)
+async def get_detail_public_note(id, db:Session=Depends(connection.get_db), authenticated_user:AuthSchemas.AuthenticatedUser=Depends(AuthServices.get_current_user)) -> schemas.GetNote:
+	return await services.get_detail_public_note(id, db=db, authenticated_user=authenticated_user)

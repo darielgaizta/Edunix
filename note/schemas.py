@@ -26,3 +26,6 @@ class GetNote(BaseNote):
 
 	class Config:
 		orm_mode = True
+
+class SetPublicNote(BaseModel):
+	is_public:bool

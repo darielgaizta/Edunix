@@ -128,5 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Setings
+# Connection
+edunix/
 edunix/connection.py
+connection.py
