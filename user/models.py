@@ -15,3 +15,4 @@ class User(connection.Base):
 
 	# Relationships
 	notes = relationship('Note', back_populates='writer')
+	stories = relationship('Story', back_populates='teller')

@@ -23,9 +23,8 @@ class CreateUser(User):
 		orm_mode = True
 
 # Get user
-class GetUser(BaseModel):
-	username:str
-	email:str
+class GetUser(BaseUser):
+	pass
 
 	class Config:
 		orm_mode = True

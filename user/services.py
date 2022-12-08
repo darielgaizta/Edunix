@@ -10,7 +10,6 @@ async def create_user(user:schemas.CreateUser, db:Session) -> schemas.GetUser:
 	new_user = models.User(**user.dict())
 	db.add(new_user)
 	db.commit()
-
 	# Return the newly created user
 	db.refresh(new_user)
 	return schemas.GetUser.from_orm(new_user)

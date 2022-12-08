@@ -10,10 +10,8 @@ class Note(BaseModel):
 class BaseNote(Note):
 	id:int
 	user_id:int
+	is_public:bool
 	date_created:datetime
-
-	class Config:
-		orm_mode = True
 
 # Create note schema
 class CreateNote(Note):
@@ -23,8 +21,8 @@ class CreateNote(Note):
 		orm_mode = True
 
 # Get Note schema
-class GetNote(Note):
-	date_created:datetime
+class GetNote(BaseNote):
+	pass
 
 	class Config:
 		orm_mode = True
