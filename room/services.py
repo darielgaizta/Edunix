@@ -44,7 +44,11 @@ async def create_room_chat(to_user_id, db:Session, authenticated_user:AuthSchema
 	to_user = db.query(UserModels.User).filter(UserModels.User.id==to_user_id)
 	if not to_user.first():
 		raise HTTPException(status_code=404, detail=f'User with ID {to_user_id} does not exists.')
-	
+	# Room validation
+	room_as_user_1 = db.query(models.RoomChatAgg).filter(models.RoomChatAgg.user_id_1==authenticated_user.id, models.RoomChatAgg.user_id_2==to_user_id)
+	room_as_user_2 = db.query(models.RoomChatAgg).filter(models.RoomChatAgg.user_id_2==authenticated_user.id, models.RoomChatAgg.user_id_1==to_user_id)
+	if room_as_user_1.first() or room_as_user_2.first():
+		raise HTTPException(status_code=404, detail=f'Room chat with user {to_user_id} is already exists.')
 	# Create new personal room chat with the users
 	new_room = models.Room(name=None)
 	db.add(new_room)
